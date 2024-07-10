@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+let cors = require("cors");
+app.use(cors());
+
 let tasks = [
   { taskId: 1, text: "Fix bug #101", priority: 2 },
   { taskId: 2, text: "Implement feature #202", priority: 1 },
@@ -85,20 +88,20 @@ function deleteTaskOfTAskId(task, taskId) {
 }
 app.get("/tasks/delete", (req, res) => {
   let taskId = parseInt(req.query.taskId);
-  let result = tasks.filter(task => deleteTaskOfTAskId(task, taskId));
-  res.json({ tasks: result});
+  let result = tasks.filter((task) => deleteTaskOfTAskId(task, taskId));
+  res.json({ tasks: result });
 });
 
 //Endpoint 7. Filter Tasks by Priority
 function filterByPriority(task, priority) {
-  return task.priority === priority
+  return task.priority === priority;
 }
 
 app.get("/tasks/filter-by-priority", (req, res) => {
   let priority = parseInt(req.query.priority);
-  let result = tasks.filter(task => filterByPriority(task, priority));
-  res.json({ tasks: result })
-})
+  let result = tasks.filter((task) => filterByPriority(task, priority));
+  res.json({ tasks: result });
+});
 
 app.listen(port, () => {
   console.log("Server is running on port https://localhost:" + port);
